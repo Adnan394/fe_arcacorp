@@ -1,40 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+README.md - Next.js Frontend
 
-## Getting Started
+Reimbursement Frontend - Next.js
 
-First, run the development server:
+Aplikasi frontend berbasis React (Next.js) untuk melakukan pengajuan reimbursement, upload dokumen, serta melihat daftar pengajuan per user. Terintegrasi dengan Laravel API menggunakan token Sanctum dan FormData.
 
-```bash
+📌 Arsitektur Solusi
+
+[User (Browser)]
+Login -> Dapatkan token Sanctum
+Kirim FormData (file, nominal, deskripsi, dsb)
+
+[Next.js Frontend]
+fetchPost('/pengajuan', FormData, Bearer Token)
+[Laravel API Backend]
+
+🎨 Penjelasan Desain
+
+🔐 Autentikasi
+
+Setelah login, token disimpan di localStorage.
+
+Setiap permintaan API disisipkan header:
+
+Authorization: Bearer {token}
+
+📄 Upload File
+
+Form pengajuan menggunakan FormData.
+
+File dikirim via <input type="file"> dan diteruskan langsung ke Laravel.
+
+📊 Perhitungan
+
+Frontend tidak melakukan perhitungan reimbursement.
+
+Semua logika tetap di backend (Laravel).
+
+⚙️ Setup & Jalankan Aplikasi
+
+1. Clone Repo
+
+2. Instalasi Dependensi
+
+npm install
+
+3. Konfigurasi API Endpoint
+
+Edit .env.local:
+
+NEXT_PUBLIC_API_URL=http://localhost:8000/api
+NEXT_PUBLIC_URL=http://localhost:8000
+
+4. Jalankan Frontend
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+🚧 Tantangan & Solusi
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Tantangan
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+Solusi
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+Kirim file ke API
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Gunakan FormData dan multipart/form-data
 
-## Learn More
+Error .map() undefined
 
-To learn more about Next.js, take a look at the following resources:
+Inisialisasi useState dengan bentuk { data: [] }
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+Autentikasi gagal
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Periksa localStorage & header Authorization
 
-## Deploy on Vercel
+✅ Fitur
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Autentikasi & Redirect otomatis
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+Form input CRUD (user, role, category, pengajuan)
+
+Fetch & tampilkan list data
+
+Modal input dinamis (add/edit)
+
+Integrasi dengan Laravel API
